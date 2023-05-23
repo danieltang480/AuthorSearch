@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results for {{ author }}</h1>
+    <ul>
+        {% for result in results %}
+        <li>
+            <h2>{{ result.title }}</h2>
+            <p>Authors: {{ result.authors|join(", ") }}</p>
+            <p>Publisher: {{ result.publisher }}</p>
+            <p>Description: {{ result.description }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
