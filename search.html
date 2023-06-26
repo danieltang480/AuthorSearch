@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Search Results</title>
+    <title>Book Search Results</title>
 </head>
 <body>
-    <h1>Search Results for {{ author }}</h1>
-    <ul>
-        {% for result in results %}
-        <li>
-            <h2>{{ result.title }}</h2>
-            <p>Authors: {{ result.authors|join(", ") }}</p>
-            <p>Publisher: {{ result.publisher }}</p>
-            <p>Description: {{ result.description }}</p>
-        </li>
+    <h1>Book Search Results</h1>
+    <p>Author: {{ author }}</p>
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Authors</th>
+            <th>Publisher</th>
+            <th>Description</th>
+            <th>Rating</th>
+            <th>Number of Ratings</th>
+        </tr>
+        {% for book in results %}
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ ", ".join(book.authors) }}</td>
+            <td>{{ book.publisher }}</td>
+            <td>{{ book.description }}</td>
+            <td>{{ book.average_rating }}</td>
+            <td>{{ book.ratings_count }}</td>
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
 </body>
 </html>
