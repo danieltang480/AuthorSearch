@@ -44,14 +44,24 @@ def search():
                         else:
                             average_rating = 'N/A'
                             ratings_count = 0
-
+                        
+                        price_info = get_book_price(book_id)  # Fetch the price data
+                        if price_info:
+                            price = price_info.get('price', 'N/A')
+                            currency_code = price_info.get('currencyCode', '')
+                        else:
+                            price = 'N/A'
+                            currency_code = ''
+                        
                         book_info = {
                             'title': title,
                             'authors': authors,
                             'publisher': publisher,
                             'description': description,
                             'average_rating': average_rating,
-                            'ratings_count': ratings_count
+                            'ratings_count': ratings_count,
+                            'price': price,
+                            'currency_code': currency_code
                         }
                         results.append(book_info)
                         books.add(title)
@@ -72,6 +82,18 @@ def get_book_ratings(book_id):
         average_rating = data["volumeInfo"]["averageRating"]
         ratings_count = data["volumeInfo"]["ratingsCount"]
         return {'averageRating': average_rating, 'ratingsCount': ratings_count}
+    else:
+        return None
+
+def get_book_price(book_id):
+    url = f"https://www.googleapis.com/books/v1/volumes/{book_id}"
+    response = requests.get(url)
+    data = response.json()
+
+    if "saleInfo" in data and "listPrice" in data["saleInfo"]:
+        price = data["saleInfo"]["listPrice"]["amount"]
+        currency_code = data["saleInfo"]["listPrice"]["currencyCode"]
+        return {'price': price, 'currencyCode': currency_code}
     else:
         return None
 
