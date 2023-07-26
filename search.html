@@ -15,6 +15,8 @@
             <th>Description</th>
             <th>Rating</th>
             <th>Number of Ratings</th>
+            <th>Price</th>
+            <th>Currency Code</th>
         </tr>
         {% for book in results %}
         <tr>
@@ -24,8 +26,23 @@
             <td>{{ book.description }}</td>
             <td>{{ book.average_rating }}</td>
             <td>{{ book.ratings_count }}</td>
+            <td>
+                {% if book.price != 'N/A' %}
+                    {{ book.price }}
+                {% else %}
+                    Price information not available
+                {% endif %}
+            </td>
+            <td>
+                {% if book.currency_code %}
+                    {{ book.currency_code }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </table>
 </body>
 </html>
+
